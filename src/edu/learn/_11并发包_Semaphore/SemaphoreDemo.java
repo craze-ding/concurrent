@@ -32,19 +32,24 @@ public class SemaphoreDemo {
 class Service{
     // 可以同时支持多个线程进入共享资源区执行。
     private Semaphore semaphore = new Semaphore(2);
+   /* 控制台输出：（控制流量，eg:秒杀场景）进入时间：1643041750497
+    线程：3进入资源执行
+    进入时间：1643041750497
+    线程：4进入资源执行
+    结束时间：1643041751503
+    结束时间：1643041751503*/
+    //方法
     public void showMethod(){
         try {
-            semaphore.acquire();
-            long startTimer = System.currentTimeMillis();
-            System.out.println("进入时间："+startTimer);
+            semaphore.acquire();  //上锁           ;
+            System.out.println("进入时间："+System.currentTimeMillis());
             System.out.println(Thread.currentThread().getName()+"进入资源执行");
             Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        long endTimer = System.currentTimeMillis();
-        System.out.println("结束时间："+endTimer);
-        semaphore.release();
+        System.out.println("结束时间："+System.currentTimeMillis());
+        semaphore.release();//解锁
         //acquire()和release()方法之间的代码为"同步代码"
     }
 }
