@@ -15,7 +15,7 @@ import java.util.concurrent.CyclicBarrier;
          // 用于在线程到达屏障5时，优先执行barrierAction，方便处理更复杂的业务场景
     方法：
          public int await()
-         // 每个线程调用await方法告诉CyclicBarrier我已经到达了屏障，然后当前线程被阻塞
+         // 每个线程调用await方法告诉CyclicBarrier我已经到达了屏障，然后当前线程被回收！
     小结：
         可以实现多线程中，某个任务在等待其他线程执行完毕以后触发。
         循环屏障可以实现达到一组屏障就触发一个任务执行！
@@ -39,9 +39,25 @@ public class CyclicBarrierDemo {
         new PeopleThread(cb).start();
         new PeopleThread(cb).start();
         new PeopleThread(cb).start();*/
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
+            new PeopleThread(cb,"员工"+i).start();
+        }*/
+        //扩展
+        for (int i = 0; i <10; i++) {
             new PeopleThread(cb,"员工"+i).start();
         }
+       /*控制台输出： 员工8进入会议室
+                员工7进入会议室
+        员工3进入会议室
+                员工0进入会议室
+        员工6进入会议室
+                员工4进入会议室
+        员工1进入会议室
+                员工5进入会议室
+        员工9进入会议室
+        人员到齐了开始由员工6主持会议！
+        员工2进入会议室
+        人员到齐了开始由员工9主持会议！*/
     }
 }
 
