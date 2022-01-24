@@ -22,49 +22,53 @@ import java.util.concurrent.TimeUnit;
          一个线程如果等不到对方的数据交换就会一直等待。
          我们也可以控制一个线程等待的时间。
          必须双方都进行交换才可以正常进行数据的交换。
+    使用场景：对比两个文件数据是否录入一致？
  */
 public class ExchangerDemo {
     public static void main(String[] args) {
         // 创建交换对象（信使）
         Exchanger<String> exchanger = new Exchanger<>();
         // 创建2给线程对象。
-        new ThreadA(exchanger).start();
-        new ThreadB(exchanger).start();
+        new oy(exchanger).start();
+        new Girl(exchanger).start();
     }
 }
 
-class ThreadA extends Thread{
+
+class oy extends Thread{
     private Exchanger<String> exchanger;
-    public ThreadA(Exchanger<String> exchanger) {
+    public oy(Exchanger<String> exchanger) {
         this.exchanger = exchanger;
     }
     @Override
     public void run() {
         try {
-            // 礼物A
-            System.out.println("线程A,做好了礼物A,等待线程B送来的礼物B.....");
+            // 礼物
+            System.out.println("男孩,做好了礼物♥,等待女孩送来的礼物.....");
             // 开始交换礼物。参数是送给其他线程的礼物!
-            // System.out.println("线程A收到线程B的礼物："+exchanger.exchange("礼物A"));
+            // System.out.println("男孩收到女孩的礼物："+exchanger.exchange("礼物♥"));
             // 如果等待了5s还没有交换它就去死（抛出异常）！
-            System.out.println("线程A收到线程B的礼物："+exchanger.exchange("礼物A", 5 , TimeUnit.SECONDS));
+            System.out.println("男孩收到女孩的礼物："+exchanger.exchange("礼物♥", 5 , TimeUnit.SECONDS));
         } catch (Exception e) {
-            System.out.println("线程A等待了5s，没有收到礼物,最终就执行结束了!");
+            System.out.println("男孩等待了5s，没有收到礼物,最终就执行结束了!");
         }
     }
 }
 
-class ThreadB extends Thread{
+class Girl extends Thread{
     private Exchanger<String> exchanger;
-    public ThreadB(Exchanger<String> exchanger) {
+    public Girl(Exchanger<String> exchanger) {
         this.exchanger = exchanger;
     }
     @Override
     public void run() {
         try {
-            // 礼物B
-            // System.out.println("线程B,做好了礼物B,等待线程A送来的礼物A.....");
+            // 礼物
+            System.out.println("女孩,做好了礼物🔑等待男孩送来的礼物.....");
+            //让那女孩犹豫5s
+            Thread.sleep(5000);
             // 开始交换礼物。参数是送给其他线程的礼物!
-            // System.out.println("线程B收到线程A的礼物："+exchanger.exchange("礼物B"));
+            System.out.println("女孩收到男孩的："+exchanger.exchange("礼物🔑"));
         } catch (Exception e) {
             e.printStackTrace();
         }
