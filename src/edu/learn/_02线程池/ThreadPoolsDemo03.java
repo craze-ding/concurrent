@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
 
     ExecutorService提交线程任务对象执行的方法：
          1.Future<?> submit(Runnable task):提交一个Runnable的任务对象给线程池执行。
-         1.Future<?> submit(Callable task):提交一个Runnable的任务对象给线程池执行。
+         1.Future<?> submit(Callable task):提交一个Callable的任务对象给线程池执行。
     小结：
         Callable做线程池的任务，可以得到它执行的结果！！
  */
@@ -25,13 +25,14 @@ public class ThreadPoolsDemo03 {
         // a.创建一个线程池，指定线程的固定数量是3.
         // new ThreadPoolExecutor(nThreads, nThreads, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
         ExecutorService pools = Executors.newFixedThreadPool(3);
-        Future<String> t1 = pools.submit(new MyCallable(10)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
-        Future<String> t2 = pools.submit(new MyCallable(20)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
-        Future<String> t3 = pools.submit(new MyCallable(30)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
-        Future<String> t4 = pools.submit(new MyCallable(40)); // 复用之前的某个线程
+        //提交Callzble任务对象后返回Future任务对象
+        Future<String> t1 = pools.submit(new MyCallable(100)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
+        Future<String> t2 = pools.submit(new MyCallable(200)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
+        Future<String> t3 = pools.submit(new MyCallable(300)); // 提交任务，此时会创建一个新线程,自动启动线程执行！
+        Future<String> t4 = pools.submit(new MyCallable(400)); // 复用之前的某个线程
 
         try{
-            // b.可以得到线程池执行的任务结构
+            // b.可以得到线程池执行的任务结果
             String rs1 = t1.get();
             String rs2 = t2.get();
             String rs3 = t3.get();
@@ -40,6 +41,11 @@ public class ThreadPoolsDemo03 {
             System.out.println(rs2);
             System.out.println(rs3);
             System.out.println(rs4);
+           // 简写后，打印会稍有不同。get()会等线程执行完再拿结果！
+           /* System.out.println(t1.get());
+            System.out.println(t2.get());
+            System.out.println(t3.get());
+            System.out.println(t4.get());*/
         }catch (Exception e){
             e.printStackTrace();
         }
