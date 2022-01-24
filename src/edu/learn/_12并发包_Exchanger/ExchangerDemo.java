@@ -29,15 +29,15 @@ public class ExchangerDemo {
         // 创建交换对象（信使）
         Exchanger<String> exchanger = new Exchanger<>();
         // 创建2给线程对象。
-        new oy(exchanger).start();
+        new Boy(exchanger).start();
         new Girl(exchanger).start();
     }
 }
 
 
-class oy extends Thread{
+class Boy extends Thread{
     private Exchanger<String> exchanger;
-    public oy(Exchanger<String> exchanger) {
+    public Boy(Exchanger<String> exchanger) {
         this.exchanger = exchanger;
     }
     @Override
