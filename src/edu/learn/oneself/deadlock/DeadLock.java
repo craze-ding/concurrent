@@ -1,4 +1,4 @@
-package edu.learn._13死锁;
+package edu.learn.oneself.deadlock;
 
 /**
  * @program: Concurrent
@@ -6,7 +6,7 @@ package edu.learn._13死锁;
  * @author: leet-Craze
  * @create: 2022-01-24 22:11
  **/
-public class DeadLock_oneself {
+public class DeadLock {
     public static void main(String[] args) {
         Object resoues1 =new Object();
         Object resoues2 =new Object();
@@ -14,6 +14,7 @@ public class DeadLock_oneself {
         new Thread(new MyRunableB(resoues1,resoues2)).start();
     }
 }
+
 class MyRunableA implements Runnable{
     private Object resoues1;
     private Object resoues2;
